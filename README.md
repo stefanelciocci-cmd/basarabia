@@ -1,36 +1,58 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# FC Basarabia — site oficial
 
-## Getting Started
+Landing page static, rapid și optimizat SEO, construit cu **Next.js 15 (static export) + Tailwind CSS 4** și componente **React Bits**.
 
-First, run the development server:
+## Pornire
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev        # http://localhost:3000
+npm run build      # generează site-ul static în /out
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Folderul `out/` se poate urca pe orice hosting static: **Vercel**, **Netlify**, **Cloudflare Pages**, GitHub Pages sau cPanel (prin FTP).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Setează domainul real înainte de build (pentru canonical, sitemap, Open Graph):
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+NEXT_PUBLIC_SITE_URL=https://domeniul-vostru.ro npm run build
+```
 
-## Learn More
+## Actualizarea conținutului
 
-To learn more about Next.js, take a look at the following resources:
+Totul e în **`src/data/club.ts`**:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- `results` — rezultate (cele mai noi primele)
+- `standings` + `standingsRound` — clasamentul Liga III-B
+- `squad` — lotul (goluri, cartonașe)
+- `fixtures` — program (meciurile trecute dispar automat la build)
+- `spotlightPlayers` — jucători în evidență (Fan Favorite, Player of the Match)
+- `sponsors` — parteneri
+- `club.email` — completați-l dacă aveți unul oficial
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Statisticile (loc, puncte, goluri) se calculează automat din `standings`. Sursa oficială: https://www.alborzminifotbal.ro — refaceți build-ul după fiecare etapă.
 
-## Deploy on Vercel
+## Sigla
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+`src/components/Crest.tsx` este o emblemă provizorie în stilul siglei. Înlocuiți-o cu sigla oficială (SVG ideal) și actualizați `src/app/icon.svg`.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Ce e inclus pentru SEO
+
+- `lang="ro"`, titlu/descriere/keywords, canonical, Open Graph + Twitter card
+- Imagine OG generată automat (`/opengraph-image`) cu culorile clubului
+- Date structurate JSON-LD: `SportsTeam`, `WebSite`, `SportsEvent` (meciuri + rezultate)
+- `sitemap.xml`, `robots.txt`, `manifest.webmanifest`, favicon + apple-touch-icon
+- HTML pre-randat (conținutul e vizibil pentru Google fără JavaScript)
+- Fonturi self-hosted cu preload, fără request-uri externe; `prefers-reduced-motion` respectat
+
+## Componente React Bits folosite
+
+`SplitText` (titlul din hero), `ShinyText`, `Aurora` (fundal hero, încărcat lazy), `ScrollVelocity` (banda „Hai FC Basarabia”), `CountUp`, `SpotlightCard` (rezultate, jucători), `Magnet` (butoane CTA), `GradientText`.
+Sursele sunt în `src/components/reactbits/`.
+
+## După lansare
+
+1. Adăugați site-ul în **Google Search Console** și trimiteți `sitemap.xml`.
+2. Puneți linkul site-ului în bio-ul de Instagram.
+3. Creați un profil **Google Business** cu adresa terenului.
+# basarabia
